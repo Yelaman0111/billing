@@ -5,6 +5,7 @@ import UsersEdit from '../components/users/UsersEdit'
 import UsersCreate from '../components/users/UsersCreate'
 import CompaniesIndex from '../components/companies/CompaniesIndex'
 import CompaniesCreate from '../components/companies/CompaniesCreate'
+import CompaniesEdit from '../components/companies/CompaniesEdit'
 
 
 const routes = [
@@ -34,6 +35,13 @@ const routes = [
         name: 'companies.create',
         component: CompaniesCreate
     },
+    {
+        path: '/companies/edit',
+        name: 'companies.edit',
+        component: CompaniesEdit,
+        props:true
+    },
+
 ]
 
 

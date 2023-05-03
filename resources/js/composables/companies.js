@@ -15,17 +15,36 @@ export default function useCompanies() {
         companies.value = response.data.data;
     }
 
-
     const getCompany = async (id) => {
-        let response = await axios.get('/api/companies' + id);
-        company.value = response.data.data;
+        let response = await axios.get('/api/companies/' + id);
+        company.value = response.data.data[0];
+        console.log(company)
+        console.log(company.name)
     }
 
+    const storeCompany = async (data) => {
+        errors.value = ''
+        try {
+            await axios.post('/api/companies', data)
+            await router.push({name: 'companies.index'})
+        } catch (e) {
+            if (e.response.status === 422) {
+                errors.value = e.response.data.errors
+            }
+        }
+    }
+
+    const destroyCompany = async (id) => {
+        await axios.delete('/api/companies/' + id);
+    }
 
     return {
         companies,
         company,
+        errors,
+        storeCompany,
         getCompanies,
         getCompany,
+        destroyCompany
     }
 }

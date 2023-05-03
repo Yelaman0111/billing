@@ -73,11 +73,11 @@
                         
                     </td>
                     <td class="px-6 py-4 text-sm leading-5 text-gray-900 whitespace-no-wrap">
-                        <router-link :to="{ name: 'users.edit', params: { id: item.id } }"
+                        <router-link :to="{ name: 'companies.edit', params: { id: item.id } }"
                                      class="mr-2 inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150">
                             Edit
                         </router-link>
-                        <button @click="deleteUser(item.id)"
+                        <button @click="deleteCompany(item.id)"
                                 class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150">
                         Delete</button>
                     </td>
@@ -94,22 +94,23 @@ import { onMounted } from "vue";
 
 export default {
     setup() {
-        const { companies, getCompanies } = useCompanies()
+        const { companies, getCompanies, destroyCompany } = useCompanies()
 
         onMounted(getCompanies)
         console.log(12312312)
-        // const deleteUser = async (id) => {
-        //     if (!window.confirm('Are you sure?')) {
-        //         return
-        //     }
+        const deleteCompany = async (id) => {
+            if (!window.confirm('Are you sure?')) {
+                return
+            }
 
-        //     await destroyUser(id);
-        //     await getUsers();
-        // }
+            await destroyCompany(id);
+            await getCompanies();
+        }
 
         return {
             companies,
-            
+            deleteCompany
+
         }
     }
 }
