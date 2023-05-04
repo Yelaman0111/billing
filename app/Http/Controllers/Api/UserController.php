@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Filters\UserFilter;
+use App\Http\Requests\FilterRequest;
 use App\Http\Requests\UserRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
@@ -15,9 +17,14 @@ use Illuminate\Validation\Rules;
 
 class UserController extends Controller
 {
-    public function index()
+    public function index(FilterRequest $request)
     {
-        return UserResource::collection(User::withTrashed()->with('role')->with('city')->get());
+
+        $filter = app()->make(UserFilter::class ,(['queryParams'=> array_filter($request->validated())]));
+
+        $users = User::filter($filter)->withTrashed()->with('role')->with('city')->get();
+        return UserResource::collection($users);
+        // return UserResource::collection(User::withTrashed()->with('role')->with('city')->get());
     }
 
     public function store(Request $request)

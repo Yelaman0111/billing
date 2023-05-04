@@ -97,7 +97,6 @@ export default {
         const { companies, getCompanies, destroyCompany } = useCompanies()
 
         onMounted(getCompanies)
-        console.log(12312312)
         const deleteCompany = async (id) => {
             if (!window.confirm('Are you sure?')) {
                 return

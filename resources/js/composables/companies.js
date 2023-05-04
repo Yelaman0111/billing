@@ -7,6 +7,9 @@ export default function useCompanies() {
 
     const companies = ref([]);
     const company = ref([]);
+    const region = ref();
+    const locality = ref();
+    const city = ref();
     const errors = ref('');
     const router = useRouter();
 
@@ -18,8 +21,9 @@ export default function useCompanies() {
     const getCompany = async (id) => {
         let response = await axios.get('/api/companies/' + id);
         company.value = response.data.data[0];
-        console.log(company)
-        console.log(company.name)
+        region.value = response.data.data[0].address.region;
+        locality.value = response.data.data[0].address.locality;
+        city.value = response.data.data[0].address.city;
     }
 
     const storeCompany = async (data) => {
@@ -41,6 +45,9 @@ export default function useCompanies() {
     return {
         companies,
         company,
+        region,
+        locality,
+        city,
         errors,
         storeCompany,
         getCompanies,

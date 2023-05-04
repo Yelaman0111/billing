@@ -16,7 +16,6 @@ export default function useAddresses() {
     const getCities = async (id) => {
         let response = await axios.get('/api/address/cities/' + id);
         cities.value = response.data.data;
-        console.log(cities.value)
     }
     const getLocalities = async (id) => {
         let response = await axios.get('/api/address/localities/' + id);

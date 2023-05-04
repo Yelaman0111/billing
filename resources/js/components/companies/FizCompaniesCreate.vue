@@ -6,15 +6,29 @@
         </p>
       </div>
     </div>
-
     <form class="space-y-6" v-on:submit.prevent="saveCompany">
         <div class="space-y-4 rounded-md shadow-sm">
-            <div>
+
+            <input type="radio" name="type" v-model="form.type" value="1"  @change="hidden= !hidden" checked > Физ лицо
+            <input type="radio" name="type" v-model="form.type" value="2"  @change="hidden= !hidden" > Компания
+
+            <div  v-if="!hidden">
                 <label for="name" class="block text-sm font-medium text-gray-700">Полное наименование</label>
                 <div class="mt-1">
                     <input type="text" name="name" id="name"
-                        class="block mt-1 w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                        v-model="form.name">
+                           class="block mt-1 w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                           v-model="form.name"
+                          >
+                </div>
+            </div>
+
+            <div  v-if="hidden">
+                <label for="name" class="block text-sm font-medium text-gray-700">Фамилия имя</label>
+                <div class="mt-1">
+                    <input type="text" name="name" id="name"
+                           class="block mt-1 w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                           v-model="form.name"
+                          >
                 </div>
             </div>
 
@@ -22,8 +36,8 @@
                 <label for="billing_name" class="block text-sm font-medium text-gray-700  mt-3">Для биллинга наименование</label>
                 <div class="mt-1">
                     <input type="text" name="billing_name" id="billing_name"
-                        class="block mt-1 w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                        v-model="form.billing_name">
+                           class="block mt-1 w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                           v-model="form.billing_name">
                 </div>
             </div>
             
@@ -31,22 +45,24 @@
                 <label for="rnn" class="block text-sm font-medium text-gray-700  mt-3">РНН(если есть)</label>
                 <div class="mt-1">
                     <input type="number" name="rnn" id="rnn"
-                        class="block mt-1 w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                        v-model="form.rnn">
+                           class="block mt-1 w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                           v-model="form.rnn">
                 </div>
             </div>
 
-            <div>
-                <label  for="ident_number" class="block text-sm font-medium text-gray-700 mt-3">БИН</label>
+            <div >
+                <label v-if="!hidden" for="ident_number" class="block text-sm font-medium text-gray-700 mt-3">БИН</label>
+                <label v-if="hidden"  for="ident_number" class="block text-sm font-medium text-gray-700 mt-3">ИНН</label>
                 <div class="mt-1">
                     <input type="number" name="ident_number" id="ident_number"
-                        class="block mt-1 w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                        v-model="form.ident_number">
+                           class="block mt-1 w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                           v-model="form.ident_number">
                 </div>
             </div>
             
             <div>
-                <label for="city_id" class="block text-sm font-medium text-gray-700 mt-3">Юридический адрес</label>
+                <label v-if="!hidden" for="city_id" class="block text-sm font-medium text-gray-700 mt-3">Юридический адрес</label>
+                <label v-if="hidden" for="city_id" class="block text-sm font-medium text-gray-700 mt-3">Адрес проживания</label>
                 <label for="city_id" class="block text-sm font-medium text-gray-700">Регион</label>
                 <div class="mt-1">
                     <select v-model="form.region" @change="fetchLocality()"
@@ -103,7 +119,28 @@
                 v-model="form.comment">
             </div>
 
-            <div>
+            <div  v-if="hidden">
+                <label for="ip" class="block text-sm font-medium text-gray-700 mt-3">Номер уд.личности</label>
+                    <div class="mt-1 row">
+                        <label for="udl_issued" class="col text-sm font-medium text-gray-700">Выдан</label>
+                        <input type="text" name="udl_issued" id="udl_issued"
+                        class="col-5 mt-1 rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                        v-model="form.udl_issued">
+
+                        <label for="udl_number" class="col text-sm font-medium text-gray-700">№</label>
+                        <input type="number" name="udl_number" id="udl_number"
+                        class="col ml-5 rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                        v-model="form.udl_number">
+
+                        <label for="udl_date" class="col text-sm font-medium text-gray-700">Дата</label>
+                        <input type="date" name="udl_date" id="udl_date"
+                        class="col mt-1 rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                        v-model="form.udl_date">
+
+                    </div>
+            </div>
+
+            <div  v-if="!hidden">
                 <label for="ip" class="block text-sm font-medium text-gray-700 mt-3">ИП Свидетельство</label>
                     <div class="mt-1 row">
                         <label for="ip_serial" class="col text-sm font-medium text-gray-700">Серия</label>
@@ -124,7 +161,7 @@
                     </div>
             </div>
 
-            <div>
+            <div  v-if="!hidden">
                 <label for="ip" class="block text-sm font-medium text-gray-700 mt-3">ИП талон</label>
                     <div class="mt-1 row">
                         <label for="ip_number" class="col text-sm font-medium text-gray-700">№</label>
@@ -219,7 +256,7 @@ import useAddresess from '../../composables/addresses'
 export default {
    setup() {
         const form = reactive({
-            'type': 2,
+            'type': '',
             'name': '',
             'billing_name': '',
             'rnn': '',
@@ -242,12 +279,15 @@ export default {
             'office': '',
             'postcode': '',
             'comment': '',
+            'udl_number':'',
+            'udl_issued':'',
+            'udl_date':'',
+            
         });
 
         const { regions, localities, cities, getRegions, getCities, getLocalities,} = useAddresess();
 
         const { storeCompany, errors } = useCompanies();
-
         onMounted(getRegions());
 
         function fetchLocality() {
@@ -258,11 +298,12 @@ export default {
             getCities(form.locality);
             console.log(form.locality)
         };
-
         const saveCompany = async () => {
             console.log(form)
             await storeCompany({...form});
         }
+    
+        // var hidden = false;
 
         return {
             form,
@@ -270,6 +311,7 @@ export default {
             localities,
             cities,
             errors,
+            // hidden,
             fetchLocality,
             fetchCities,
             saveCompany,

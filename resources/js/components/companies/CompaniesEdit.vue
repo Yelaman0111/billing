@@ -9,21 +9,8 @@
     <company class="space-y-6" v-on:submit.prevent="saveUser">
         <div class="space-y-4 rounded-md shadow-sm">
 
-            <input type="radio" name="type" v-model="company.type" value="1"  @change="hidden= !hidden" > Компания
-            <input type="radio" name="type" v-model="company.type" value="2"  @change="hidden= !hidden" checked > Физ лицо
-
-            <div  v-if="!hidden">
+            <div>
                 <label for="name" class="block text-sm font-medium text-gray-700">Полное наименование</label>
-                <div class="mt-1">
-                    <input type="text" name="name" id="name"
-                           class="block mt-1 w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                           v-model="company.name"
-                          >
-                </div>
-            </div>
-
-            <div  v-if="hidden">
-                <label for="name" class="block text-sm font-medium text-gray-700">Фамилия имя</label>
                 <div class="mt-1">
                     <input type="text" name="name" id="name"
                            class="block mt-1 w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
@@ -51,8 +38,7 @@
             </div>
 
             <div >
-                <label v-if="!hidden" for="ident_number" class="block text-sm font-medium text-gray-700 mt-3">БИН</label>
-                <label v-if="hidden"  for="ident_number" class="block text-sm font-medium text-gray-700 mt-3">ИНН</label>
+                <label for="ident_number" class="block text-sm font-medium text-gray-700 mt-3">БИН</label>
                 <div class="mt-1">
                     <input type="number" name="ident_number" id="ident_number"
                            class="block mt-1 w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
@@ -61,8 +47,7 @@
             </div>
             
             <div>
-                <label v-if="!hidden" for="city_id" class="block text-sm font-medium text-gray-700 mt-3">Юридический адрес</label>
-                <label v-if="hidden" for="city_id" class="block text-sm font-medium text-gray-700 mt-3">Адрес проживания</label>
+                <label for="city_id" class="block text-sm font-medium text-gray-700 mt-3">Юридический адрес</label>
                 <label for="city_id" class="block text-sm font-medium text-gray-700">Регион</label>
                 <div class="mt-1">
                     <select v-model="company.address.region" @change="fetchLocality()"
@@ -72,6 +57,7 @@
                         </option>
                     </select>
                 </div>
+
                 <div class="mt-1">
                     <select v-model="company.address.locality" @change="fetchCities()"
                      class="col mt-1 rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
@@ -119,28 +105,7 @@
                 v-model="company.address.comment">
             </div>
 
-            <div  v-if="hidden">
-                <label for="ip" class="block text-sm font-medium text-gray-700 mt-3">Номер уд.личности</label>
-                    <div class="mt-1 row">
-                        <label for="udl_issued" class="col text-sm font-medium text-gray-700">Выдан</label>
-                        <input type="text" name="udl_issued" id="udl_issued"
-                        class="col-5 mt-1 rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                        v-model="company.udl_issued">
-
-                        <label for="udl_number" class="col text-sm font-medium text-gray-700">№</label>
-                        <input type="number" name="udl_number" id="udl_number"
-                        class="col ml-5 rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                        v-model="company.udl_number">
-
-                        <label for="udl_date" class="col text-sm font-medium text-gray-700">Дата</label>
-                        <input type="date" name="udl_date" id="udl_date"
-                        class="col mt-1 rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                        v-model="company.udl_date">
-
-                    </div>
-            </div>
-
-            <div  v-if="!hidden">
+            <div>
                 <label for="ip" class="block text-sm font-medium text-gray-700 mt-3">ИП Свидетельство</label>
                     <div class="mt-1 row">
                         <label for="ip_serial" class="col text-sm font-medium text-gray-700">Серия</label>
@@ -161,7 +126,7 @@
                     </div>
             </div>
 
-            <div  v-if="!hidden">
+            <div>
                 <label for="ip" class="block text-sm font-medium text-gray-700 mt-3">ИП талон</label>
                     <div class="mt-1 row">
                         <label for="ip_number" class="col text-sm font-medium text-gray-700">№</label>
@@ -197,7 +162,7 @@
                     </div>
             </div>
 
-            <div>
+            <!-- <div>
                 <label for="nds_serial" class="block text-sm font-medium text-gray-700 mt-3">Адрес для доставки</label>
                 <div class="mt-1 row">
 
@@ -215,7 +180,7 @@
                     v-model="company.address.delivery_address">
 
                 </div>
-            </div>
+            </div> -->
 
             <div>
                 <label for="vip" class="block text-sm font-medium text-gray-700 mt-3">Категория</label>
@@ -263,15 +228,16 @@ export default {
 
     setup(props) {
 
-        const { errors, company, getCompany } = useCompanies();
-        const { regions, localities, cities, getRegions, getCities, getLocalities,} = useAddresses();
+        const { errors, company, region, locality, city, getCompany } = useCompanies();
+        const { regions, getRegions, getCities, getLocalities,} = useAddresses();
 
         onMounted(getCompany(props.id));
         onMounted(getRegions());
-        onMounted(getLocalities(3));
-        onMounted(getCities(1));
-        console.log(props.id);
-        // console.log(company.address.region);
+
+        console.log(region.value);
+
+        onMounted(getLocalities(region));
+        onMounted(getCities(locality));
 
         // onMounted(getRoles());
         // onMounted(getCities());
@@ -285,8 +251,6 @@ export default {
             errors,
             company,
             regions,
-            localities,
-            cities
         }
    }
 }
