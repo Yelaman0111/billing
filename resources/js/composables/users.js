@@ -7,6 +7,7 @@ export default function useUsers() {
 
     const users = ref([]);
     const roles = ref([]);
+    const managers = ref([]);
     const cities = ref([]);
     const user = ref([]);
     const errors = ref('');
@@ -62,11 +63,17 @@ export default function useUsers() {
     }
 
 
+    const getManagers = async () => {
+        let response = await axios.get('/api/users/managers');
+        managers.value = response.data.data;
+    }
+
     return {
         user,
         users,
         roles,
         cities,
+        managers,
         getUsers,
         getUser,
         updateUser,
@@ -74,5 +81,6 @@ export default function useUsers() {
         getCities,
         destroyUser,
         storeUser,
+        getManagers,
     }
 }

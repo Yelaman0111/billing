@@ -76,4 +76,10 @@ class UserController extends Controller
 
         return response()->noContent();
     }
+
+
+    public function getManagers()
+    {
+        return UserResource::collection(User::whereIn('role_id', [4,5])->get());
+    }
 }

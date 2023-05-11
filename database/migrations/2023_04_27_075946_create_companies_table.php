@@ -15,22 +15,22 @@ class CreateCompaniesTable extends Migration
     {
         Schema::create('companies', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('billing_name')->unique();;
-            $table->string('rnn')->nullable();
-            $table->string('ident_number');
+            $table->string('name'); // название компании  
+            $table->string('billing_name')->unique(); // название компании в биллинге
+            $table->string('rnn')->nullable(); // РНН
+            $table->string('ident_number'); // БИН или ИНН
             $table->integer('address_id')->unsigned()->nullable();
-            $table->integer('vip');
-            $table->integer('type');
-            $table->string('udl_number')->nullable();
-            $table->string('udl_issued')->nullable();
-            $table->date('udl_date')->nullable();
-            $table->string('ip_number')->nullable();
-            $table->string('ip_serial')->nullable();
-            $table->date('ip_date')->nullable();
-            $table->string('nds_number')->nullable();
-            $table->string('nds_serial')->nullable();
-            $table->date('nds_date')->nullable();
+            // $table->integer('vip'); // флаг вип
+            $table->integer('type'); // типа клиента 1-обычный 2-VIP 3-SuperVip 4-SuperExtraVip
+            $table->string('udl_number')->nullable(); // номер удостоверения
+            $table->string('udl_issued')->nullable(); // Кем выдано удостоверение
+            $table->date('udl_date')->nullable(); // Дата выдачи удостоверения
+            $table->string('ip_number')->nullable(); // Номер ИП
+            $table->string('ip_serial')->nullable();// Серия ИП
+            $table->date('ip_date')->nullable(); // Дата ИП
+            $table->string('nds_number')->nullable();// Номер НДС
+            $table->string('nds_serial')->nullable();// Серия НДС
+            $table->date('nds_date')->nullable();// Дата НДС
             $table->softDeletes(); 
             $table->timestamps();
         });

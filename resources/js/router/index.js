@@ -6,6 +6,9 @@ import UsersCreate from '../components/users/UsersCreate'
 import CompaniesIndex from '../components/companies/CompaniesIndex'
 import CompaniesCreate from '../components/companies/CompaniesCreate'
 import CompaniesEdit from '../components/companies/CompaniesEdit'
+import ContractsIndex from '../components/contracts/ContractsIndex'
+import ContractsCreate from '../components/contracts/ContractsCreate'
+import ContractsShow from '../components/contracts/ContractsShow'
 
 
 const routes = [
@@ -41,7 +44,22 @@ const routes = [
         component: CompaniesEdit,
         props:true
     },
-
+    {
+        path: '/contracts',
+        name: 'contracts.index',
+        component: ContractsIndex
+    },
+    {
+        path: '/contracts/create',
+        name: 'contracts.create',
+        component: ContractsCreate
+    },
+    {
+        path: '/contracts/show',
+        name: 'contracts.show',
+        component: ContractsShow,
+        props:true
+    },
 ]
 
 

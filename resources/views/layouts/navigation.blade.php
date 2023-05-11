@@ -21,6 +21,9 @@
                     <router-link :to="{ name: 'companies.index' }"  active="request()->routeIs('companies')">
                         Компании
                     </router-link>
+                    <router-link :to="{ name: 'contracts.index' }"  active="request()->routeIs('contracts')">
+                        Договора
+                    </router-link>
                 </div>
             </div>
 
